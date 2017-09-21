@@ -10,11 +10,14 @@ public class EventLogTest {
     public Event event1 = new Event();
     public Event event2 = new Event();
     public Event event3;
+    public Event event4 = new Event();
 
     @Before
     public void setUp() throws Exception {
-        event1.setName("Name");
+        event1.setName("Face2Face");
         event1.setAction("Action");
+
+        event4.setName("Bad Name");
     }
 
     @After
@@ -31,14 +34,32 @@ public class EventLogTest {
     public ExpectedException expected = ExpectedException.none();
 
     @Test
-    public void addEventNull() throws Exception {
+    public void addEventNullFields() throws Exception {
         expected.expect(IllegalArgumentException.class);
         EventLog eventLog = new EventLog();
         eventLog.addEvent(event2);
     }
 
     @Test
+    public void addEventNull() throws Exception {
+        expected.expect(IllegalArgumentException.class);
+        EventLog eventLog = new EventLog();
+        eventLog.addEvent(event3);
+    }
+
+    @Test
+    public void addEventBadName() throws Exception {
+        expected.expect(IllegalArgumentException.class);
+        EventLog eventLog = new EventLog();
+        eventLog.addEvent(event4);
+    }
+
+    @Test
     public void getNumEvents() throws Exception {
+        EventLog eventLog = new EventLog();
+        eventLog.addEvent(event1);
+        eventLog.addEvent(event1);
+        assertTrue(eventLog.getNumEvents()==2 );
     }
 
 
